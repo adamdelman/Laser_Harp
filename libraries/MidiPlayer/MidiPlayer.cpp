@@ -69,14 +69,14 @@ void MidiPlayer::demo() {
     //Demo Basic MIDI instruments, GM1
     //=================================================================
 #ifdef DEBUG_VIA_SERIAL
-    Serial.println("Basic Instruments Demo");
-    Serial.println("######################");
+    Serial.println(F("Basic Instruments Demo"));
+    Serial.println(F("######################"));
 #endif
     //Change to different instrument
     for (byte instrument = (byte) MIDI_GM1_INSTRUMENTS::Guitar_Fret_Noise;
          instrument < (byte) MIDI_GM1_INSTRUMENTS::Bird_Tweet; instrument++) {
 #ifdef DEBUG_VIA_SERIAL
-        Serial.print("Instrument: #");
+        Serial.print(F("Instrument: #"));
         Serial.println(instrument, DEC);
 #endif
         set_instrument(instrument); //Set instrument number.
@@ -84,7 +84,7 @@ void MidiPlayer::demo() {
         //Play notes from F#-0 (30) to F#-5 (90):
         for (byte note = 30; note < 35; note++) {
 #ifdef DEBUG_VIA_SERIAL
-            Serial.print("Note: #");
+            Serial.print(F("Note: #"));
             Serial.println(note, DEC);
 #endif
 
@@ -110,8 +110,8 @@ void MidiPlayer::demo2() {
     //Demo GM2 / Fancy sounds
     //=================================================================
 #ifdef DEBUG_VIA_SERIAL
-    Serial.println("Fancy Sounds Demo");
-    Serial.println("#################");
+    Serial.println(F("Fancy Sounds Demo"));
+    Serial.println(F("#################"));
 #endif
     enable_melodic_bank();
     set_channel_reverb(0,127);
@@ -119,14 +119,14 @@ void MidiPlayer::demo2() {
     for (byte instrument = 49;
          instrument < 52; instrument++) {
 #ifdef DEBUG_VIA_SERIAL
-        Serial.print("Instrument: #");
+        Serial.print(F("Instrument: #"));
         Serial.println(instrument, DEC);
 #endif
         set_instrument(instrument); //Set instrument number.
         //Play fancy sounds from 'High Q' to 'Open Surdo [EXC 6]'
         for (byte note = 50; note < 53; note++) {
 #ifdef DEBUG_VIA_SERIAL
-            Serial.print("Note: #");
+            Serial.print(F("Note: #"));
             Serial.println(note, DEC);
 #endif
             //Note on channel 1 (0x90), some note value (note), middle velocity (0x45):
@@ -220,7 +220,7 @@ void MidiPlayer::vs_set_reverb(int reverb_level) {
     vs_write_register(VS_SCI_WRAMADDR_REGISTER, 0, 0x1e03); // Register Parametric.config1 address
     current_config = vs_read_register(VS_SCI_WRAM_REGISTER); // Read config1
     current_config = (current_config & ~0xf) |
-                     reverb_level;    // Set reverb to 1 = off (see VS1053 Datasheet Chapter 9.11.4: "Midi")
+                     reverb_level;    // Set reverb to 1 = off (see VS1053 Datasheet Chapter 9.11.4: F("Midi"))
     vs_write_register(VS_SCI_WRAMADDR_REGISTER, 0, 0x1e03);
     vs_write_register(VS_SCI_WRAM_REGISTER, 0,
                       current_config); // Write the new value for config1. Now Midi echo is disabled.
@@ -268,39 +268,39 @@ void MidiPlayer::send_midi_message(byte cmd, byte data) {
     digitalWrite(VS_XDCS, HIGH);
 }
 
-void MidiPlayer::print_details(void)
+void MidiPlayer::print_details()
 {
-    Serial.println("VS1053 Configuration");
-    Serial.print("MODE ");
+    Serial.println(F("VS1053 Configuration"));
+    Serial.print(F("MODE "));
     Serial.println(vs_read_register(0));
-    Serial.print("STATUS ");
+    Serial.print(F("STATUS "));
     Serial.println(vs_read_register(1));
-    Serial.print("BASS ");
+    Serial.print(F("BASS "));
     Serial.println(vs_read_register(2));
-    Serial.print("CLOCKF ");
+    Serial.print(F("CLOCKF "));
     Serial.println(vs_read_register(3));
-    Serial.print("DECODE_TIME ");
+    Serial.print(F("DECODE_TIME "));
     Serial.println(vs_read_register(4));
-    Serial.print("AUDATA ");
+    Serial.print(F("AUDATA "));
     Serial.println(vs_read_register(5));
-    Serial.print("WRAM ");
+    Serial.print(F("WRAM "));
     Serial.println(vs_read_register(6));
-    Serial.print("WRAMADDR ");
+    Serial.print(F("WRAMADDR "));
     Serial.println(vs_read_register(7));
-    Serial.print("HDAT0 ");
+    Serial.print(F("HDAT0 "));
     Serial.println(vs_read_register(8));
-    Serial.print("HDAT1 ");
+    Serial.print(F("HDAT1 "));
     Serial.println(vs_read_register(9));
-    Serial.print("AIADDR ");
+    Serial.print(F("AIADDR "));
     Serial.println(vs_read_register(10));
-    Serial.print("VOL ");
+    Serial.print(F("VOL "));
     Serial.println(vs_read_register(11));
-    Serial.print("AICTRL0 ");
+    Serial.print(F("AICTRL0 "));
     Serial.println(vs_read_register(12));
-    Serial.print("AICTRL1 ");
+    Serial.print(F("AICTRL1 "));
     Serial.println(vs_read_register(13));
-    Serial.print("AICTRL2 ");
+    Serial.print(F("AICTRL2 "));
     Serial.println(vs_read_register(14));
-    Serial.print("AICTRL3 ");
+    Serial.print(F("AICTRL3 "));
     Serial.println(vs_read_register(15));
 }
